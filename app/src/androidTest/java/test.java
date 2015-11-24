@@ -6,5 +6,6 @@ public class test {
     {
         System.out.print(100);
         System.out.print(100);
+        System.out.print(100);
     }
 }
