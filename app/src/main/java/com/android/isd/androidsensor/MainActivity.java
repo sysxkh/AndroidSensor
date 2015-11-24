@@ -83,6 +83,7 @@ public class MainActivity extends Activity  {
         }
 
         public void onAccuracyChanged(int sensor, int accuracy) {
+            
         }
     };
 
