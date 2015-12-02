@@ -107,8 +107,8 @@ public class MainActivity extends Activity  {
         long timeDelta = timeNow.getTime() - lastUpdate.getTime();
         lastUpdate.setTime(timeNow.getTime());
 
-        float deltaVelocity = appliedAcceleration * (timeDelta / 1000);
-        float deltaDistance = deltaVelocity*(timeDelta/1000);
+        float deltaVelocity = appliedAcceleration * timeDelta / 1000;
+        float deltaDistance = deltaVelocity * timeDelta / 1000;
         appliedAcceleration = currentAcceleration;
         if(isTouch)
         {
