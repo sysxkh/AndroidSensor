@@ -48,30 +48,30 @@ public class MainActivity extends Activity  {
         {
             Button button = (Button) findViewById(R.id.button);
             Button button1 = (Button) findViewById(R.id.button2);
-            final Button buttonX = (Button) findViewById(R.id.buttonX);
-            final Button buttonZ = (Button) findViewById(R.id.buttonZ);
-
-            buttonX.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    sensorManager.unregisterListener(sensorListenerZ);
-                    sensorManager.registerListener(sensorListenerX, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
-                    buttonX.setEnabled(false);
-                    buttonZ.setEnabled(true);
-                }
-            });
-
-            buttonZ.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v) {
-                    sensorManager.unregisterListener(sensorListenerX);
-                    sensorManager.registerListener(sensorListenerZ, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
-                    buttonX.setEnabled(true);
-                    buttonZ.setEnabled(false);
-                }
-            });
+//            final Button buttonX = (Button) findViewById(R.id.buttonX);
+//            final Button buttonZ = (Button) findViewById(R.id.buttonZ);
+//
+//            buttonX.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v) {
+//                    sensorManager.unregisterListener(sensorListenerZ);
+//                    sensorManager.registerListener(sensorListenerX, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+//                    buttonX.setEnabled(false);
+//                    buttonZ.setEnabled(true);
+//                }
+//            });
+//
+//            buttonZ.setOnClickListener(new View.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(View v) {
+//                    sensorManager.unregisterListener(sensorListenerX);
+//                    sensorManager.registerListener(sensorListenerZ, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+//                    buttonX.setEnabled(true);
+//                    buttonZ.setEnabled(false);
+//                }
+//            });
 
             button1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,7 +107,7 @@ public class MainActivity extends Activity  {
               }
 
             );
-            buttonZ.setEnabled(false);
+        //    buttonZ.setEnabled(false);
             sensorManager.registerListener(sensorListenerZ,
                     sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
                     SensorManager.SENSOR_DELAY_FASTEST);
@@ -155,7 +155,7 @@ public class MainActivity extends Activity  {
 
         //    double a = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
             double a = z;
-            if(a<0.3 && a>-.03)
+            if(a<0.5 && a>-0.5)
                 a = 0;
 
 
@@ -171,30 +171,30 @@ public class MainActivity extends Activity  {
             
         }
     };
-
-    private final SensorEventListener sensorListenerX = new SensorEventListener() {
-
-        double calibration = Double.NaN;
-
-        public void onSensorChanged(SensorEvent event) {
-            double x = event.values[0];
-
-            double a = x;
-            if(a<0.3 && a>-.03)
-                a = 0;
-
-            if (calibration == Double.NaN)
-                calibration = a;
-            else {
-                updateVelocity();
-                currentAcceleration = (float) a;
-            }
-        }
-
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
+//
+//    private final SensorEventListener sensorListenerX = new SensorEventListener() {
+//
+//        double calibration = Double.NaN;
+//
+//        public void onSensorChanged(SensorEvent event) {
+//            double x = event.values[0];
+//
+//            double a = x;
+//            if(a<0.5 && a>-0.5)
+//                a = 0;
+//
+//            if (calibration == Double.NaN)
+//                calibration = a;
+//            else {
+//                updateVelocity();
+//                currentAcceleration = (float) a;
+//            }
+//        }
+//
+//        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//        }
+//    };
 
 
 }
