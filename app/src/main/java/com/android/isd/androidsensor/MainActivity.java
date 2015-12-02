@@ -27,6 +27,7 @@ public class MainActivity extends Activity  {
     float currentAcceleration = 0;
     float distance = 0;
     boolean isTouch = false;
+    float lastV = 0;
     Date lastUpdate;
 
     @Override
@@ -51,7 +52,7 @@ public class MainActivity extends Activity  {
             button1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    myTextView.setText("The distance between your move is : 0.0 m");
+                    distance = 0;
                 }
             });
 
@@ -90,7 +91,7 @@ public class MainActivity extends Activity  {
                 public void run() {
                     updateGUI();
                 }
-            }, 0, 1000);
+            }, 0, 100);
         }
     }
 
@@ -108,8 +109,10 @@ public class MainActivity extends Activity  {
         lastUpdate.setTime(timeNow.getTime());
 
         float deltaVelocity = appliedAcceleration * timeDelta / 1000;
-        float deltaDistance = deltaVelocity * timeDelta / 1000;
+        float deltaDistance = lastV*timeDelta/1000 + (float) 0.5 * deltaVelocity * timeDelta / 1000;
         appliedAcceleration = currentAcceleration;
+        lastV = lastV + deltaVelocity;
+
         if(isTouch)
         {
             distance += deltaDistance;
