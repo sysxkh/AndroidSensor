@@ -28,4 +28,20 @@
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.07" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:id="@+id/buttonX"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.20" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Z"
+        android:id="@+id/buttonZ"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.20" />
 </LinearLayout>

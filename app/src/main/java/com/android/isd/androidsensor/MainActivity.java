@@ -48,11 +48,36 @@ public class MainActivity extends Activity  {
         {
             Button button = (Button) findViewById(R.id.button);
             Button button1 = (Button) findViewById(R.id.button2);
+            final Button buttonX = (Button) findViewById(R.id.buttonX);
+            final Button buttonZ = (Button) findViewById(R.id.buttonZ);
+
+            buttonX.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    sensorManager.unregisterListener(sensorListenerZ);
+                    sensorManager.registerListener(sensorListenerX, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+                    buttonX.setEnabled(false);
+                    buttonZ.setEnabled(true);
+                }
+            });
+
+            buttonZ.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v) {
+                    sensorManager.unregisterListener(sensorListenerX);
+                    sensorManager.registerListener(sensorListenerZ, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_FASTEST);
+                    buttonX.setEnabled(true);
+                    buttonZ.setEnabled(false);
+                }
+            });
 
             button1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     distance = 0;
+                    lastV = 0;
                 }
             });
 
@@ -82,8 +107,8 @@ public class MainActivity extends Activity  {
               }
 
             );
-
-            sensorManager.registerListener(sensorListener,
+            buttonZ.setEnabled(false);
+            sensorManager.registerListener(sensorListenerZ,
                     sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
                     SensorManager.SENSOR_DELAY_FASTEST);
             Timer updateTimer = new Timer("velocityUpdate");
@@ -109,27 +134,30 @@ public class MainActivity extends Activity  {
         lastUpdate.setTime(timeNow.getTime());
 
         float deltaVelocity = appliedAcceleration * timeDelta / 1000;
-        float deltaDistance = lastV*timeDelta/1000 + (float) 0.5 * deltaVelocity * timeDelta / 1000;
+        float deltaDistance = lastV*timeDelta/1000 +  deltaVelocity * timeDelta / 2000;
         appliedAcceleration = currentAcceleration;
-        lastV = lastV + deltaVelocity;
+
 
         if(isTouch)
         {
             distance += deltaDistance;
+            lastV = lastV + deltaVelocity;
         }
     }
 
 
-    private final SensorEventListener sensorListener = new SensorEventListener() {
+    private final SensorEventListener sensorListenerZ = new SensorEventListener() {
 
         double calibration = Double.NaN;
 
         public void onSensorChanged(SensorEvent event) {
-            double x = event.values[0];
-            double y = event.values[1];
             double z = event.values[2];
 
-            double a = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+        //    double a = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+            double a = z;
+            if(a<0.3 && a>-.03)
+                a = 0;
+
 
             if (calibration == Double.NaN)
                 calibration = a;
@@ -141,6 +169,30 @@ public class MainActivity extends Activity  {
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
             
+        }
+    };
+
+    private final SensorEventListener sensorListenerX = new SensorEventListener() {
+
+        double calibration = Double.NaN;
+
+        public void onSensorChanged(SensorEvent event) {
+            double x = event.values[0];
+
+            double a = x;
+            if(a<0.3 && a>-.03)
+                a = 0;
+
+            if (calibration == Double.NaN)
+                calibration = a;
+            else {
+                updateVelocity();
+                currentAcceleration = (float) a;
+            }
+        }
+
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
         }
     };
 
