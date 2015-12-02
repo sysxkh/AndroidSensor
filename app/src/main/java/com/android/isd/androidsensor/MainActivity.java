@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -38,13 +39,22 @@ public class MainActivity extends Activity  {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         List<Sensor> allSensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
-        if(allSensors==null || allSensors.size()==0 || !allSensors.contains(Sensor.TYPE_ACCELEROMETER))
+        if(allSensors==null || allSensors.size()==0 || !allSensors.contains(sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)))
         {
             myTextView.setText("No ACCELEROMETER Sensor !");
         }
         else
         {
             Button button = (Button) findViewById(R.id.button);
+            Button button1 = (Button) findViewById(R.id.button2);
+
+            button1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myTextView.setText("The distance between your move is : 0.0 m");
+                }
+            });
+
             button.setOnTouchListener(new View.OnTouchListener() {
                   @Override
                   public boolean onTouch(View v, MotionEvent event)
@@ -73,7 +83,7 @@ public class MainActivity extends Activity  {
             );
 
             sensorManager.registerListener(sensorListener,
-                    SensorManager.SENSOR_ACCELEROMETER,
+                    sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION),
                     SensorManager.SENSOR_DELAY_FASTEST);
             Timer updateTimer = new Timer("velocityUpdate");
             updateTimer.scheduleAtFixedRate(new TimerTask() {
@@ -106,14 +116,15 @@ public class MainActivity extends Activity  {
         }
     }
 
-    private final SensorListener sensorListener = new SensorListener() {
+
+    private final SensorEventListener sensorListener = new SensorEventListener() {
 
         double calibration = Double.NaN;
 
-        public void onSensorChanged(int sensor, float[] values) {
-            double x = values[SensorManager.DATA_X];
-            double y = values[SensorManager.DATA_Y];
-            double z = values[SensorManager.DATA_Z] - (double) SensorManager.STANDARD_GRAVITY;
+        public void onSensorChanged(SensorEvent event) {
+            double x = event.values[0];
+            double y = event.values[1];
+            double z = event.values[2];
 
             double a = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
 
@@ -125,7 +136,7 @@ public class MainActivity extends Activity  {
             }
         }
 
-        public void onAccuracyChanged(int sensor, int accuracy) {
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
             
         }
     };
