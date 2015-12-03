@@ -47,7 +47,7 @@ public class MainActivity extends Activity  {
         else
         {
             Button button = (Button) findViewById(R.id.button);
-            Button button1 = (Button) findViewById(R.id.button2);
+//            Button button1 = (Button) findViewById(R.id.button2);
 //            final Button buttonX = (Button) findViewById(R.id.buttonX);
 //            final Button buttonZ = (Button) findViewById(R.id.buttonZ);
 //
@@ -73,13 +73,13 @@ public class MainActivity extends Activity  {
 //                }
 //            });
 
-            button1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    distance = 0;
-                    lastV = 0;
-                }
-            });
+//            button1.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    distance = 0;
+//                    lastV = 0;
+//                }
+//            });
 
             button.setOnTouchListener(new View.OnTouchListener() {
                   @Override
@@ -90,6 +90,8 @@ public class MainActivity extends Activity  {
                           case MotionEvent.ACTION_DOWN:
                           {
                               isTouch = true;
+                              distance = 0;
+                              lastV = 0;
                               break;
                           }
                           case MotionEvent.ACTION_MOVE:

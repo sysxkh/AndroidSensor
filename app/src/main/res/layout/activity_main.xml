@@ -6,27 +6,46 @@
         android:orientation="vertical"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="#232a31">
+
+    <TextView
+        android:id="@+id/hiddenTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="88dp" />
+
     <TextView
         android:id="@+id/myTextView"
+        android:layout_width="304dp"
+        android:layout_height="50dp"
+        android:text="ttt"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rectangle_shape"
+        android:textColor="#151515"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/hiddenTextView2"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
-        android:layout_weight="0.20" />
+        android:layout_height="95dp"
+        android:layout_weight="0.17" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="138dp"
         android:layout_height="wrap_content"
         android:text="Start"
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.04" />
+        android:layout_weight="0.14"
+        android:background="@drawable/circle_shape" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:id="@+id/button2"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Clear"-->
+        <!--android:id="@+id/button2"-->
+        <!--android:layout_weight="0.07"-->
+        <!--android:background="#40a77e" />-->
 
 </LinearLayout>
