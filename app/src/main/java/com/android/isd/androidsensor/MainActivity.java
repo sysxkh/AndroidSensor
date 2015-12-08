@@ -13,16 +13,19 @@ import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity  {
     Handler handler = new Handler();
     SensorManager sensorManager;
     TextView myTextView;
+    Toast toast;
     float appliedAcceleration = 0;
     float currentAcceleration = 0;
     float distance = 0;
@@ -92,6 +95,9 @@ public class MainActivity extends Activity  {
                               isTouch = true;
                               distance = 0;
                               lastV = 0;
+                              toast = Toast.makeText(getApplicationContext(), "Measuring...", Toast.LENGTH_SHORT);
+                              toast.setGravity(Gravity.TOP,0,0);
+                              toast.show();
                               break;
                           }
                           case MotionEvent.ACTION_MOVE:
@@ -101,6 +107,9 @@ public class MainActivity extends Activity  {
                           case MotionEvent.ACTION_UP:
                           {
                               isTouch = false;
+                              toast = Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_SHORT);
+                              toast.setGravity(Gravity.TOP,0,0);
+                              toast.show();
                               break;
                           }
                       }
